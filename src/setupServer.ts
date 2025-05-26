@@ -12,8 +12,8 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import 'express-async-errors';
 import { config } from './config';
 import applicationRoute from './routes';
-import { CustomError, IErrorResponse } from './shared/globals/helpers/error-handler';
 import Logger from 'bunyan';
+import { CustomError, IErrorResponse } from 'src/shared/globals/helpers/error-handler';
 
 const SERVER_PORT = 5000; //nije osetljiva promenjiva pa ne mora u .env
 const log: Logger = config.createLogger('Server');
@@ -110,5 +110,8 @@ export class ChattyServer {
     });
   }
 
-  private socketIOConnections(_io: Server): void {}
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private socketIOConnections(_io: Server): void {
+    log.info('socketIOConnections');
+  }
 }
