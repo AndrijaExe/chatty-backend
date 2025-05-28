@@ -1,6 +1,10 @@
 import { Application } from 'express';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { authRoutes } from './features/auth/rouths/authRoutes';
+
+const BASE_PATH = '/api/v1';
 export default (app: Application) => {
-  const routes = () => {};
+  const routes = () => {
+    app.use(BASE_PATH,authRoutes.routes());
+  };
   routes();
 };
