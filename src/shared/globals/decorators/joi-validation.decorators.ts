@@ -2,11 +2,7 @@ import { JoiRequestValidationError } from '../helpers/error-handler';
 import { Request } from 'express';
 import { ObjectSchema } from 'joi';
 
-type IJoiDecorator = (
-  target: object,
-  key: string,
-  descriptor: PropertyDescriptor
-) => void;
+type IJoiDecorator = (target: object, key: string, descriptor: PropertyDescriptor) => void;
 
 export function joiValidation(schema: ObjectSchema): IJoiDecorator {
   return (_target: object, _key: string, descriptor: PropertyDescriptor) => {
