@@ -19,5 +19,8 @@
       "allowSyntheticDefaultImports": true,
       "pretty": true,
       "resolveJsonModule": true
-    }
+
+    },
+      "include": ["src/**/*"],
+      "exclude": ["jest.config.ts"]
   }

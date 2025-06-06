@@ -9,7 +9,6 @@ import { loginSchema } from '../schemes/signin';
 import { IAuthDocument } from '../interfaces/auth.interface';
 import { IUserDocument } from 'src/features/user/interfaces/user.interface';
 import { userService } from 'src/shared/services/db/user.service';
-
 export class SignIn {
   @joiValidation(loginSchema)
   public async Read(req: Request, res: Response): Promise<void> {
@@ -38,7 +37,7 @@ export class SignIn {
       },
       config.JWT_TOKEN!
     );
-    req.session = { jwt: userJWT };
+
     const userDocument: IUserDocument = {
       ...user,
       authId: existingUser!._id,
@@ -48,6 +47,16 @@ export class SignIn {
       uId: existingUser!.uId,
       createdAt: existingUser!.createdAt
     } as IUserDocument;
-    res.status(HTTP_STATUS.OK).json({ message: 'User login succesfully', user: userDocument, token: userJWT });
+    /*const templateParams: IResetPasswordParams = {
+      username: existingUser.username!,
+      email: existingUser.email!,
+      ipaddress: publicIP.address(),
+      date: moment().format('DD/MM/YYYY HH:mm')
+    };*/
+    //const resetLink = `${config.CLIENT_URL}/reset-password?token=7326716373628183`;
+    //const template: string = resetPasswordTemplate.passwordResetConfirmationTemplate(templateParams);
+    //emailQueue.addEmailJob('forgotPasswordEmail', {template , receiverEmail: 'joy.tremblay@ethereal.email', subject: 'Password reset confirmation'});
+    req.session = { jwt: userJWT };
+    res.status(HTTP_STATUS.OK).json({ message: 'User login successfully', user: userDocument, token: userJWT });
   }
 }
