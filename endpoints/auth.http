@@ -24,7 +24,7 @@ withCredentials: true
 
 {
   "username": "danny",
-  "password": "qwerty"
+  "password": "qwerty1"
 }
 
 ###
@@ -38,3 +38,27 @@ GET {{baseUrl}}/{{urlPath}}/currentuser
 Content-Type: application/json
 Accept: application/json
 withCredentials: true
+
+
+###
+POST {{baseUrl}}/{{urlPath}}/forgot-password
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+#zato sto je pise u cors credentials: true
+
+{
+  "email": "danny@test.com"
+}
+
+###
+POST {{baseUrl}}/{{urlPath}}/reset-password/f17f0d6344b54c05cd624eb9feaa427aef1588c0
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+#zato sto je pise u cors credentials: true
+
+{
+  "password": "qwerty1",
+  "confirmPassword": "qwerty1"
+}
