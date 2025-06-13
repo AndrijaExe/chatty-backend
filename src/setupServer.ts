@@ -14,6 +14,7 @@ import { config } from './config';
 import applicationRoute from './routes';
 import Logger from 'bunyan';
 import { CustomError, IErrorResponse } from 'src/shared/globals/helpers/error-handler';
+import { SocketIOPostHandler } from './shared/sockets/post';
 
 const SERVER_PORT = 5000; //nije osetljiva promenjiva pa ne mora u .env
 const log: Logger = config.createLogger('Server');
@@ -110,8 +111,10 @@ export class ChattyServer {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private socketIOConnections(_io: Server): void {
-    log.info('socketIOConnections');
+
+  private socketIOConnections(io: Server): void {
+    const postSocketHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+
+    postSocketHandler.listen();
   }
 }

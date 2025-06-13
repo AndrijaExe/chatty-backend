@@ -1,0 +1,87 @@
+@baseUrl = http://localhost:5000
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/post
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+#zato sto je pise u cors credentials: true
+
+{
+  "post": "This is my first post",
+  "bgColor": "#4aa1f3",
+  "privacy": "Public",
+  "profilePicture": "https://res.cloudinary.com/djx3m95m2/image/upload/v1748860670/683d7efd7c3a8aadeccb0a44",
+  "feelings": "happy",
+  "gifUrl": ""
+}
+###
+POST {{baseUrl}}/{{urlPath}}/post/image/post
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+#zato sto je pise u cors credentials: true
+
+{
+  "post": "Post with image created",
+  "bgColor": "#4aa1f3",
+  "privacy": "Public",
+  "profilePicture": "https://res.cloudinary.com/djx3m95m2/image/upload/v1748860670/683d7efd7c3a8aadeccb0a44",
+  "feelings": "happy",
+  "gifUrl": "",
+  "image": "https://res.cloudinary.com/djx3m95m2/image/upload/v1748860670/683d7efd7c3a8aadeccb0a44"
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/all/1
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/images/1
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/post/6845e36eeefb2d2c767b0a7e
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+###
+PUT {{baseUrl}}/{{urlPath}}/post/6845ee96f2a1e5a77ab1d693
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "Post with image updated",
+  "bgColor": "#ffffff",
+  "privacy": "Public",
+  "profilePicture": "https://res.cloudinary.com/djx3m95m2/image/upload/v1748860670/683d7efd7c3a8aadeccb0a44",
+  "feelings": "happy",
+  "gifUrl": "",
+  "imgId": "",
+  "imgVersion": ""
+}
+
+###
+PUT {{baseUrl}}/{{urlPath}}/post/image/6845ee96f2a1e5a77ab1d693
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "post": "Post with image",
+  "bgColor": "#ffffff",
+  "privacy": "Public",
+  "profilePicture": "https://res.cloudinary.com/djx3m95m2/image/upload/v1748860670/683d7efd7c3a8aadeccb0a44",
+  "feelings": "sad",
+  "gifUrl": "",
+  "imgId": "im7ehywvfoslronq4hbt",
+  "imgVersion": "1749834869",
+  "image": "https://res.cloudinary.com/djx3m95m2/image/upload/v1748860670/683d7efd7c3a8aadeccb0a44"
+}
