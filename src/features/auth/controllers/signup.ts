@@ -40,7 +40,7 @@ export class SignUp {
     });
     const result: UploadApiResponse = (await uploads(avatarImage, `${userObjectId}`, true, true)) as UploadApiResponse;
 
-    if (!result.public_id) {
+    if (!result?.public_id) {
       throw new BadRequestError('File uppload: Error occured.Try again.');
     }
 
