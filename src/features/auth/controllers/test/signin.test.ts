@@ -7,9 +7,10 @@ import { authService } from 'src/shared/services/db/auth.service';
 import { Helpers } from 'src/shared/globals/helpers/helpers';
 import { userService } from 'src/shared/services/db/user.service';
 import { IUserDocument } from 'src/features/user/interfaces/user.interface';
+import { testCredentials } from 'src/mocks/test-credentials.mock';
 
-const USERNAME = 'Danny';
-const PASSWORD = 'qwerty1';
+const USERNAME = testCredentials.username;
+const PASSWORD = testCredentials.password;
 const WRONG_USERNAME = 'da';
 const WRONG_PASSWORD = 'da';
 const LONG_PASSWORD = 'mathematics11111111';
@@ -124,7 +125,7 @@ describe('SignIn', () => {
       avatarColor: authMock.avatarColor,
       createdAt: authMock.createdAt,
       email: authMock.email,
-      password: 'qwerty1', // jer si tako mockovao
+      password: PASSWORD, // jer si tako mockovao
       uId: authMock.uId,
       username: authMock.username
     };
