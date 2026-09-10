@@ -5,6 +5,7 @@ import { SignUp } from '../signup';
 import { CustomError } from 'src/shared/globals/helpers/error-handler';
 import { authService } from 'src/shared/services/db/auth.service';
 import { UserCache } from 'src/shared/services/redis/user.cache';
+import { testCredentials } from 'src/mocks/test-credentials.mock';
 
 jest.mock('src/shared/services/queues/base.queue');
 jest.mock('src/shared/services/redis/user.cache');
@@ -13,6 +14,10 @@ jest.mock('src/shared/services/queues/auth.queue');
 jest.mock('src/shared/globals/helpers/cloudinary-upload');
 
 describe('SignUp', () => {
+  const VALID_USERNAME = testCredentials.username;
+  const VALID_EMAIL = testCredentials.email;
+  const VALID_PASSWORD = testCredentials.password;
+
   //ova dva nam konkretno za nas slucaj ne trebaju ali ako bi pravili integrisane testove sa bazom i/ili redis-om trebalo bi nam vrv
   beforeEach(() => {
     jest.resetAllMocks();
@@ -25,8 +30,8 @@ describe('SignUp', () => {
   it('Should throw an error if username is not available.', () => {
     const req:Request = authMockRequest({} , {
       username: '',
-      email: 'danny@test.com',
-      password: 'qwerty1',
+      email: VALID_EMAIL,
+      password: VALID_PASSWORD,
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;
@@ -42,8 +47,8 @@ describe('SignUp', () => {
   it('Should throw an error if username length is less than minimum.', () => {
     const req:Request = authMockRequest({} , {
       username: 'da',
-      email: 'danny@test.com',
-      password: 'qwerty1',
+      email: VALID_EMAIL,
+      password: VALID_PASSWORD,
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;
@@ -58,8 +63,8 @@ describe('SignUp', () => {
   it('Should throw an error if username length is greater than maximum.', () => {
     const req:Request = authMockRequest({} , {
       username: 'daaaaaaaaaaaaaaaaaaaaaaaa',
-      email: 'danny@test.com',
-      password: 'qwerty1',
+      email: VALID_EMAIL,
+      password: VALID_PASSWORD,
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;
@@ -74,9 +79,9 @@ describe('SignUp', () => {
 
   it('Should throw an error if email is invalid.', () => {
     const req:Request = authMockRequest({} , {
-      username: 'danny',
+      username: VALID_USERNAME,
       email: 'not valid',
-      password: 'qwerty1',
+      password: VALID_PASSWORD,
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;
@@ -91,9 +96,9 @@ describe('SignUp', () => {
 
   it('Should throw an error if email is not available.', () => {
     const req:Request = authMockRequest({} , {
-      username: 'danny',
+      username: VALID_USERNAME,
       email: '',
-      password: 'qwerty1',
+      password: VALID_PASSWORD,
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;
@@ -108,9 +113,9 @@ describe('SignUp', () => {
 
   it('Should throw an error if password length is greater than maximum.', () => {
     const req:Request = authMockRequest({} , {
-      username: 'danny',
-      email: 'danny@test.com',
-      password: 'qwerty1234567890-1',
+      username: VALID_USERNAME,
+      email: VALID_EMAIL,
+      password: 'dummyPasswordTooLong123',
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;
@@ -125,8 +130,8 @@ describe('SignUp', () => {
 
   it('Should throw an error if password is not available.', () => {
     const req:Request = authMockRequest({} , {
-      username: 'danny',
-      email: 'danny@example.com',
+      username: VALID_USERNAME,
+      email: VALID_EMAIL,
       password: '',
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
@@ -141,8 +146,8 @@ describe('SignUp', () => {
 
   it('Should throw an error if password length is less than minimum.', () => {
     const req:Request = authMockRequest({} , {
-      username: 'danny',
-      email: 'danny@example.com',
+      username: VALID_USERNAME,
+      email: VALID_EMAIL,
       password: 'qw',
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
@@ -158,9 +163,9 @@ describe('SignUp', () => {
 
   it('Should throw an error if user already exist.', () => {
     const req:Request = authMockRequest({} , {
-      username: 'danny',
-      email: 'danny@example.com',
-      password: 'qwerty1',
+      username: VALID_USERNAME,
+      email: VALID_EMAIL,
+      password: VALID_PASSWORD,
       avatarColor: 'red',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;
@@ -176,9 +181,9 @@ describe('SignUp', () => {
 
   it('Should set session data for valid credentials and send correct json response.', async () => {
     const req:Request = authMockRequest({} , {
-      username: 'Danny',
-      email: 'danny@test.com',
-      password: 'qwerty',
+      username: VALID_USERNAME,
+      email: VALID_EMAIL,
+      password: VALID_PASSWORD,
       avatarColor: 'purple',
       avatarImage: 'https://w7.pngwing.com/pngs/120/102/png-transparent-padlock-logo-computer-icons-padlock-technic-logo-password-lock.png'
     }) as Request;

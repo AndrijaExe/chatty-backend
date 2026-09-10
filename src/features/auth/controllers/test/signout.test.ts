@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { authMockRequest, authMockResponse } from 'src/mocks/auth.mock';
+import { testCredentials } from 'src/mocks/test-credentials.mock';
 import { SignOut } from '../signout';
 
-const USERNAME = 'Danny';
-const PASSWORD = 'qwerty1';
+const USERNAME = testCredentials.username;
+const PASSWORD = testCredentials.password;
 
 describe('SignOut', () => {
   it('should set session to null', async () => {

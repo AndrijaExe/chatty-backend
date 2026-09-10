@@ -1,3 +1,4 @@
+import { testCredentials } from './test-credentials.mock';
 import { IUserDocument } from 'src/features/user/interfaces/user.interface';
 
 export const mockExistingUser = {
@@ -104,4 +105,4 @@ export const searchedUserMock = {
   avatarColor: 'red',
 };
 
-export const userJWT = 'dojnsojakndoklnsadjusbnaijbdIHBHSBAHUJBAsoihdnojsnaijdbihjsabdh';
+export const userJWT = testCredentials.jwt;

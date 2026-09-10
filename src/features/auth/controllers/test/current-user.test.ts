@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { IUserDocument } from 'src/features/user/interfaces/user.interface';
 import { authMockRequest, authMockResponse, authUserPayload } from 'src/mocks/auth.mock';
+import { testCredentials } from 'src/mocks/test-credentials.mock';
 import { UserCache } from 'src/shared/services/redis/user.cache';
 import { CurrentUser } from '../current-user';
 import { existingUser } from 'src/mocks/user.mock';
@@ -9,8 +10,8 @@ jest.mock('src/shared/services/queues/base.queue');
 jest.mock('src/shared/services/redis/user.cache');
 jest.mock('src/shared/services/db/user.service');
 
-const USERNAME = 'Danny';
-const PASSWORD = 'qwerty1';
+const USERNAME = testCredentials.username;
+const PASSWORD = testCredentials.password;
 
 describe('CurrentUser', () => {
   beforeEach(() => {
@@ -37,7 +38,7 @@ describe('CurrentUser', () => {
     });
 
     it('should set session token and send correct json response', async () => {
-      const req: Request = authMockRequest({ jwt: '12djdj34' }, { username: USERNAME, password: PASSWORD }, authUserPayload) as Request;
+      const req: Request = authMockRequest({ jwt: testCredentials.jwt }, { username: USERNAME, password: PASSWORD }, authUserPayload) as Request;
       const res: Response = authMockResponse();
       jest.spyOn(UserCache.prototype, 'getUserFromCache').mockResolvedValue(existingUser);
 
